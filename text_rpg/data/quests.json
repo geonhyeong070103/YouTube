@@ -1,0 +1,17 @@
+{
+  "q_main_1": {"title": "마을을 위협하는 슬라임", "type": "main",
+    "objectives": [{"type": "defeat", "target": "slime", "count": 5, "progress": 0}],
+    "rewards": {"exp": 100, "gold": 50}, "description": "마을 근처 슬라임을 처치하라."},
+  "q_main_2": {"title": "숲의 늑대 무리", "type": "main",
+    "objectives": [{"type": "defeat", "target": "forest_wolf", "count": 8, "progress": 0}],
+    "rewards": {"exp": 250, "gold": 120}, "description": "숲을 어지럽히는 늑대를 처치하라."},
+  "q_sub_herb": {"title": "약초 수집", "type": "sub",
+    "objectives": [{"type": "gather", "target": "herb", "count": 5, "progress": 0}],
+    "rewards": {"exp": 40, "gold": 30}, "description": "연금술사를 위해 약초를 모아오라."},
+  "q_daily_hunt": {"title": "일일 사냥", "type": "daily",
+    "objectives": [{"type": "defeat", "target": "any", "count": 10, "progress": 0}],
+    "rewards": {"exp": 60, "gold": 40}, "description": "몬스터 10마리를 처치하라. (매일 초기화)"},
+  "q_paladin_trial": {"title": "성기사의 시련", "type": "sub",
+    "objectives": [{"type": "defeat", "target": "cave_troll_boss", "count": 1, "progress": 0}],
+    "rewards": {"exp": 500, "gold": 0}, "description": "전직을 위한 시련: 동굴트롤을 처치하라."}
+}

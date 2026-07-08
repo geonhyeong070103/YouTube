@@ -1,0 +1,37 @@
+{
+  "wooden_sword": {"kind": "equipment", "name": "낡은 목검", "slot": "WEAPON", "rarity": "COMMON",
+    "base_stats": {"atk": 4}, "description": "초심자용 목검"},
+  "iron_sword": {"kind": "equipment", "name": "철검", "slot": "WEAPON", "rarity": "UNCOMMON",
+    "base_stats": {"atk": 9}, "description": "튼튼한 철검", "set_name": "iron_set"},
+  "flame_blade": {"kind": "equipment", "name": "화염검", "slot": "WEAPON", "rarity": "RARE",
+    "base_stats": {"atk": 15}, "element": "FIRE", "description": "불꽃이 타오르는 검"},
+  "dragon_slayer": {"kind": "equipment", "name": "용살자", "slot": "WEAPON", "rarity": "LEGENDARY",
+    "base_stats": {"atk": 40, "luck": 5}, "description": "전설의 대검"},
+
+  "leather_armor": {"kind": "equipment", "name": "가죽 갑옷", "slot": "ARMOR", "rarity": "COMMON",
+    "base_stats": {"def": 5}, "description": "가벼운 가죽 갑옷"},
+  "iron_armor": {"kind": "equipment", "name": "철갑옷", "slot": "ARMOR", "rarity": "UNCOMMON",
+    "base_stats": {"def": 10}, "description": "묵직한 철갑옷", "set_name": "iron_set"},
+  "mythril_armor": {"kind": "equipment", "name": "미스릴 갑옷", "slot": "ARMOR", "rarity": "EPIC",
+    "base_stats": {"def": 22, "max_hp": 30}, "description": "미스릴로 제작된 갑옷"},
+
+  "lucky_ring": {"kind": "equipment", "name": "행운의 반지", "slot": "ACCESSORY", "rarity": "RARE",
+    "base_stats": {"luck": 8}, "description": "행운을 불러오는 반지"},
+  "amulet_of_light": {"kind": "equipment", "name": "빛의 부적", "slot": "ACCESSORY", "rarity": "MYTHIC",
+    "base_stats": {"def": 10, "max_mp": 20}, "element": "LIGHT", "description": "신화급 유물"},
+
+  "potion_small": {"kind": "consumable", "name": "소형 체력 물약", "rarity": "COMMON",
+    "effect_type": "heal_hp", "effect_value": 40, "description": "HP를 40 회복한다"},
+  "potion_large": {"kind": "consumable", "name": "대형 체력 물약", "rarity": "UNCOMMON",
+    "effect_type": "heal_hp", "effect_value": 120, "description": "HP를 120 회복한다"},
+  "mana_potion": {"kind": "consumable", "name": "마나 물약", "rarity": "COMMON",
+    "effect_type": "heal_mp", "effect_value": 30, "description": "MP를 30 회복한다"},
+  "antidote": {"kind": "consumable", "name": "해독제", "rarity": "COMMON",
+    "effect_type": "cure_status", "effect_value": 0, "description": "모든 상태이상을 치료한다"},
+
+  "slime_gel": {"kind": "material", "name": "슬라임 젤", "rarity": "COMMON", "description": "제작 재료"},
+  "wolf_fang": {"kind": "material", "name": "늑대의 송곳니", "rarity": "COMMON", "description": "제작 재료"},
+  "dragon_scale": {"kind": "material", "name": "용의 비늘", "rarity": "LEGENDARY", "description": "희귀 제작 재료"},
+
+  "old_map_piece": {"kind": "quest_item", "name": "낡은 지도 조각", "rarity": "RARE", "description": "퀘스트 진행용 아이템"}
+}
