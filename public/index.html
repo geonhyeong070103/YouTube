@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>2D 멀티플레이어 미니게임</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Malgun Gothic', sans-serif;
+            background: #f7f9fa;
+        }
+
+        #menu {
+            margin: 50px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 3px solid #333;
+            background: #ffffff;
+            display: none;
+            /* 게임 시작 전에는 숨김 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button,
+        input {
+            padding: 12px 20px;
+            font-size: 16px;
+            margin: 5px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #status {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎮 2D 실시간 멀티 웹게임</h1>
+
+    <div id="menu">
+        <button id="createBtn">방 만들기 (새 게임)</button>
+        <br><br>
+        <input type="text" id="roomInput" placeholder="방 코드 5자리 입력">
+        <button id="joinBtn" style="background-color: #008CBA;">방 참여하기</button>
+    </div>
+
+    <p id="status" style="display: none;"></p>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const menu = document.getElementById('menu');
+        const createBtn = document.getElementById('createBtn');
+        const joinBtn = document.getElementById('joinBtn');
+        const roomInput = document.getElementById('roomInput');
+        const status = document.getElementById('status');
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let players = {};
+        const keys = { up: false, down: false, left: false, right: false };
+
+        // 버튼 이벤트 리스너
+        createBtn.addEventListener('click', () => socket.emit('createRoom'));
+        joinBtn.addEventListener('click', () => {
+            const code = roomInput.value.trim().toUpperCase();
+            if (code) socket.emit('joinRoom', code);
+        });
+
+        // 서버 반응 처리
+        socket.on('roomCreated', (code) => startGame(code));
+        socket.on('roomJoined', (code) => startGame(code));
+        socket.on('errorMsg', (msg) => alert(msg));
+
+        // 서버로부터 실시간 플레이어 위치 동기화
+        socket.on('updatePlayers', (serverPlayers) => {
+            players = serverPlayers;
+        });
+
+        function startGame(roomCode) {
+            menu.style.display = 'none';
+            canvas.style.display = 'block';
+            status.style.display = 'block';
+            status.innerText = `현재 방 코드: ${roomCode} | 조작 방법: WASD 키를 누르세요.`;
+
+            // 키보드 입력 감지
+            window.addEventListener('keydown', (e) => handleKey(e, true));
+            window.addEventListener('keyup', (e) => handleKey(e, false));
+
+            // 입력 루프 주기적 전송 (60fps)
+            setInterval(() => {
+                if (keys.up || keys.down || keys.left || keys.right) {
+                    socket.emit('move', keys);
+                }
+            }, 1000 / 60);
+
+            // 렌더링 루프 시작
+            requestAnimationFrame(draw);
+        }
+
+        function handleKey(e, isPressed) {
+            const key = e.key.toLowerCase();
+            if (key === 'w') keys.up = isPressed;
+            if (key === 's') keys.down = isPressed;
+            if (key === 'a') keys.left = isPressed;
+            if (key === 'd') keys.right = isPressed;
+        }
+
+        // 화면 그리기 함수
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 모든 플레이어 순회하며 그리기
+            for (let id in players) {
+                const p = players[id];
+
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 20, 0, Math.PI * 2); // 반지름 20짜리 원 캐릭터
+                ctx.fill();
+
+                // 본인 캐릭터인 경우 검은색 테두리를 그려서 구별하기 쉽게 함
+                if (id === socket.id) {
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
+            }
+
+            requestAnimationFrame(draw);
+        }
+    </script>
+</body>
+
+</html>
